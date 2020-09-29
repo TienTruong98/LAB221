@@ -1,0 +1,33 @@
+INFO::Sun Sep 27 09:14:40 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 14:26:18 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 14:27:47 ICT 2020::LoginAttemp::Admin-admin
+INFO::Sun Sep 27 14:27:54 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 14:31:09 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 15:53:11 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 15:54:39 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 15:55:47 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 15:56:35 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 15:58:04 ICT 2020::LoginAttemp::Admin-Admin
+SEVERE::Sun Sep 27 15:59:30 ICT 2020::tientt.view.ItemPanel::Violation of PRIMARY KEY constraint 'PK__tblItems__A22D0FD123A64FDC'. Cannot insert duplicate key in object 'dbo.tblItems'. The duplicate key value is (S1).
+INFO::Sun Sep 27 16:03:19 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:05:45 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:07:29 ICT 2020::LoginAttemp::Admin-Admin
+SEVERE::Sun Sep 27 16:07:40 ICT 2020::tientt.view.ItemPanel::The INSERT statement conflicted with the FOREIGN KEY constraint "FK__tblItems__supCod__3B75D760". The conflict occurred in database "LAB221_P1", table "dbo.tblSuppliers", column 'supCode'.
+INFO::Sun Sep 27 16:09:18 ICT 2020::LoginAttemp::Admin-Admin
+SEVERE::Sun Sep 27 16:09:28 ICT 2020::tientt.view.ItemPanel::The INSERT statement conflicted with the FOREIGN KEY constraint "FK__tblItems__supCod__3B75D760". The conflict occurred in database "LAB221_P1", table "dbo.tblSuppliers", column 'supCode'.
+INFO::Sun Sep 27 16:09:54 ICT 2020::LoginAttemp::Admin-Admin
+SEVERE::Sun Sep 27 16:10:02 ICT 2020::tientt.view.ItemPanel::The INSERT statement conflicted with the FOREIGN KEY constraint "FK__tblItems__supCod__3B75D760". The conflict occurred in database "LAB221_P1", table "dbo.tblSuppliers", column 'supCode'.
+INFO::Sun Sep 27 16:10:46 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:30:00 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:33:03 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:34:18 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:34:44 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:34:56 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:35:15 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:35:37 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:36:07 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:36:31 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:36:44 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:36:59 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:38:25 ICT 2020::LoginAttemp::Admin-Admin
+INFO::Sun Sep 27 16:38:51 ICT 2020::LoginAttemp::Admin-Admin
