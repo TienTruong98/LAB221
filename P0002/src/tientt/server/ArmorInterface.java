@@ -24,4 +24,5 @@ public interface ArmorInterface extends Remote{
     boolean removeArmor(String id) throws RemoteException;
 
     boolean updateArmor(ArmorDTO dto) throws RemoteException;
+    
 }

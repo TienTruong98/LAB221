@@ -2,3 +2,4 @@ SE1-;-heavy-;-123-;--;-05:37:44 28/09/2020-;-12
 SE2-;-light-;-123-;-123-;-05:41:00 28/09/2020-;-123
 Tien-;-a super heavy armor-;-a good armor-;-good-;-05:43:56 28/09/2020-;-1000
 SE3-;-straw -;-a straw armor-;-terible-;-05:53:10 28/09/2020-;-1
+SE10-;-light-;-light armor-;-good-;-09:12:37 30/09/2020-;-1

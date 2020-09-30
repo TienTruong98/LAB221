@@ -14,6 +14,7 @@ import java.math.BigInteger;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -99,8 +100,10 @@ public class test {
     }
 
     public static void main(String[] args) {
-        String a = "SE1-;-heavy-;-1-;--;-10:01:31 28/09/2020-;-1";
-        String[] b = a.split("-;-");
-        System.out.println(b.length);
+        List<String> a = new ArrayList<>();
+        System.out.println(a.size());
+        a.add(null);
+        System.out.println(a.size());
+        
     }
 }

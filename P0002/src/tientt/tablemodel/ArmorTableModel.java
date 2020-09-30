@@ -18,7 +18,7 @@ public class ArmorTableModel extends AbstractTableModel {
 
     private final String[] headers;
     private final int[] indexes;
-    private final List<ArmorViewObject> data;
+    private List<ArmorViewObject> data;
 
     public ArmorTableModel(String[] headers, int[] indexes) {
         this.headers = headers;
@@ -66,9 +66,10 @@ public class ArmorTableModel extends AbstractTableModel {
     }
 
     public void loadData(List<ArmorViewObject> listViewObject) {
-        if (listViewObject == null){
+        if (listViewObject == null) {
             return;
         }
+        this.data = new Vector<>();
         for (ArmorViewObject viewObject : listViewObject) {
             this.data.add(viewObject);
         }

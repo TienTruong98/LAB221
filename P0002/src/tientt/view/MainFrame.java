@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -29,7 +30,7 @@ import tientt.viewobject.ArmorViewObject;
  * @author natton
  */
 public class MainFrame extends javax.swing.JFrame {
-    
+
     private final String[] HEADERS = {"ID", "Classification", "TimeOfCreate", "Defense"};
     private final int[] INDEXES = {1, 2, 5, 6};
     private ArmorTableModel armorTableModel;
@@ -38,7 +39,7 @@ public class MainFrame extends javax.swing.JFrame {
     private boolean isAddNew = true;
     private SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.DATE_FORMAT);
     private static final Logger LOGGER = ClientLogger.getLogger();
-    
+
     public MainFrame() {
         initComponents();
         mapper = ArmorViewObjectMapper.getNewInstance();
@@ -51,18 +52,20 @@ public class MainFrame extends javax.swing.JFrame {
         }
         initTable();
     }
-    
+
     private void initTable() {
-        
+
         armorTableModel = new ArmorTableModel(HEADERS, INDEXES);
         tblArmor.setModel(armorTableModel);
-        loadData();
+        loadTableData(null);
         tblArmor.updateUI();
     }
-    
-    private void loadData() {
+
+    private void loadTableData(List<ArmorDTO> listArmorDTO) {
         try {
-            List<ArmorDTO> listArmorDTO = armorService.findAllArmors();
+            if (listArmorDTO == null) {
+                listArmorDTO = armorService.findAllArmors();
+            }
             List<ArmorViewObject> listViewObject = mapper.toListViewObject(listArmorDTO);
             armorTableModel.loadData(listViewObject);
         } catch (RemoteException ex) {
@@ -102,6 +105,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnRemove = new javax.swing.JButton();
         btnFind = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
+        btnGetAll = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,6 +167,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         btnFind.setText("Find By ArmorID");
+        btnFind.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFindMouseClicked(evt);
+            }
+        });
         btnFind.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFindActionPerformed(evt);
@@ -255,22 +264,39 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btnGetAll.setText("Get all");
+        btnGetAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGetAllMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(216, 216, 216)
+                        .addComponent(btnGetAll)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnGetAll)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -284,32 +310,32 @@ public class MainFrame extends javax.swing.JFrame {
     private void tblArmorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArmorMouseClicked
         int selectedRow = tblArmor.getSelectedRow();
         ArmorViewObject viewObject = armorTableModel.getData().get(selectedRow);
-        
+
         txtArmorID.setText(viewObject.getArmorID());
         txtClassification.setText(viewObject.getClassification());
         txtTimeOfCreate.setText(viewObject.getTimeOfCreate());
         txtDefense.setText(String.valueOf(viewObject.getDefense()));
         txtDescription.setText(viewObject.getDescription());
         txtStatus.setText(viewObject.getStatus());
-        
+
         txtArmorID.setEnabled(false);
         txtTimeOfCreate.setEnabled(false);
         isAddNew = false;
 
     }//GEN-LAST:event_tblArmorMouseClicked
-    
+
     private void displayMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
-    
+
     private ArmorViewObject getNewArmorInfo() {
         ArmorViewObject viewObject = new ArmorViewObject();
-        viewObject.setArmorID(txtArmorID.getText());
-        viewObject.setClassification(txtClassification.getText());
-        viewObject.setDefense(txtDefense.getText());
-        viewObject.setDescription(txtDescription.getText());
-        viewObject.setStatus(txtStatus.getText());
-        viewObject.setTimeOfCreate(txtTimeOfCreate.getText());
+        viewObject.setArmorID(txtArmorID.getText().trim());
+        viewObject.setClassification(txtClassification.getText().trim());
+        viewObject.setDefense(txtDefense.getText().trim());
+        viewObject.setDescription(txtDescription.getText().trim());
+        viewObject.setStatus(txtStatus.getText().trim());
+        viewObject.setTimeOfCreate(txtTimeOfCreate.getText().trim());
         return viewObject;
     }
     private void btnCreateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateMouseClicked
@@ -335,7 +361,7 @@ public class MainFrame extends javax.swing.JFrame {
                 //show success message
                 displayMessage("Add successfully");
             }
-            
+
         } catch (RemoteException ex) {
             LOGGER.log(Level.SEVERE, MainFrame.class.getName() + "::" + ex.getMessage());
             displayMessage("Server does not response. App will shutdown");
@@ -378,7 +404,7 @@ public class MainFrame extends javax.swing.JFrame {
                 ////show success message
                 displayMessage("Save successfully");
             }
-            
+
         } catch (RemoteException ex) {
             LOGGER.log(Level.SEVERE, MainFrame.class.getName() + "::" + ex.getMessage());
             displayMessage("Server does not response. App will shutdown");
@@ -410,6 +436,42 @@ public class MainFrame extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_btnRemoveMouseClicked
+
+    private void btnFindMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFindMouseClicked
+        try {
+            String armorID = txtArmorID.getText().trim();
+            List<ArmorDTO> listDTO = new Vector<>();
+            //call model
+            ArmorDTO armorDTO = armorService.findArmorByID(armorID);
+            if (armorDTO != null) {
+                listDTO.add(armorDTO);
+            }
+            loadTableData(listDTO);
+            //updateView
+            tblArmor.updateUI();
+            btnResetMouseClicked(null);
+        } catch (RemoteException ex) {
+            LOGGER.log(Level.SEVERE, MainFrame.class.getName() + "::" + ex.getMessage());
+            displayMessage("Server does not response. App will shutdown");
+            System.exit(0);
+        }
+
+    }//GEN-LAST:event_btnFindMouseClicked
+
+    private void btnGetAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGetAllMouseClicked
+        try {
+            //call model
+            List<ArmorDTO> listDTO = armorService.findAllArmors();
+            loadTableData(listDTO);
+            //update UI
+            tblArmor.updateUI();
+            btnResetMouseClicked(null);
+        } catch (RemoteException ex) {
+            LOGGER.log(Level.SEVERE, MainFrame.class.getName() + "::" + ex.getMessage());
+            displayMessage("Server does not response. App will shutdown");
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btnGetAllMouseClicked
 
     /**
      * @param args the command line arguments
@@ -449,6 +511,7 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnFind;
+    private javax.swing.JButton btnGetAll;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnUpdate;
