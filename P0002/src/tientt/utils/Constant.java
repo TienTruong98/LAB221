@@ -12,4 +12,5 @@ package tientt.utils;
 public class Constant {
     public static final String DATE_FORMAT = "hh:mm:ss dd/MM/yyyy";
     public static final String DATA_DELIMITER = "-;-";
+    public static final String NEW_LINE_DELIMETER = "-n-n-n-";
 }

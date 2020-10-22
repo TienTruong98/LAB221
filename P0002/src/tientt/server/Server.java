@@ -24,10 +24,10 @@ public class Server {
     public static void main(String[] args) {
         try {
             LocateRegistry.createRegistry(1098);
-            ArmorInterface armorServer = new ArmorServer();
-            String name = "rmi://localhost:1098/armor";
-            Naming.rebind(name, armorServer);
-            System.out.println("Server is running at: " + name);
+            String url = "rmi://localhost:1098/armor";
+            ArmorInterface server = new ArmorServer();
+            Naming.rebind(url, server);
+            System.out.println("Server running at: "+url);
         } catch (MalformedURLException | RemoteException e) {
             LOGGER.log(Level.SEVERE, Server.class.getName() + "::" + e.getMessage());
         }

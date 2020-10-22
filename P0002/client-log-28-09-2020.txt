@@ -1,4 +1,0 @@
-SEVERE::Mon Sep 28 18:23:56 ICT 2020::tientt.view.MainFrame::Connection refused to host: localhost; nested exception is: 
-	java.net.ConnectException: Connection refused: connect
-SEVERE::Mon Sep 28 18:24:29 ICT 2020::tientt.view.MainFrame::Connection refused to host: 192.168.80.1; nested exception is: 
-	java.net.ConnectException: Connection refused: connect

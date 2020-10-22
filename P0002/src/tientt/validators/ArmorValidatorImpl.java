@@ -29,8 +29,8 @@ public class ArmorValidatorImpl implements ArmorValidatior {
 
     @Override
     public boolean isArmorIDValid(String armorID) {
-        Pattern pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
-        return !pattern.matcher(armorID).find();
+        Pattern pattern = Pattern.compile("^[a-z0-9A-Z]");
+        return pattern.matcher(armorID).find();
     }
 
     @Override

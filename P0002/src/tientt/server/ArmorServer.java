@@ -44,7 +44,7 @@ public class ArmorServer extends UnicastRemoteObject implements ArmorInterface {
         String[] elements = line.split(Constant.DATA_DELIMITER);
         String armorID = elements[0];
         String classification = elements[1];
-        String description = elements[2];
+        String description = changeFileLineToStringBlockFormat(elements[2]);
         String status = elements[3];
         String timeOfCreateString = elements[4];
         String defenseString = elements[5];
@@ -56,6 +56,13 @@ public class ArmorServer extends UnicastRemoteObject implements ArmorInterface {
                 description, status, timeOfCreate, defense);
         return dto;
     }
+    private String changeStringBlockToFileLineFormat(String stringBlock){
+        return stringBlock.replaceAll("\n", Constant.NEW_LINE_DELIMETER);
+    }
+    
+    private String changeFileLineToStringBlockFormat(String line){
+        return line.replaceAll(Constant.NEW_LINE_DELIMETER, "\n");
+    }
 
     private String parseDTOToString(ArmorDTO armorDTO) {
         StringBuilder sb = new StringBuilder();
@@ -63,7 +70,7 @@ public class ArmorServer extends UnicastRemoteObject implements ArmorInterface {
         sb.append(Constant.DATA_DELIMITER);
         sb.append(armorDTO.getClassification());
         sb.append(Constant.DATA_DELIMITER);
-        sb.append(armorDTO.getDescription());
+        sb.append(changeStringBlockToFileLineFormat(armorDTO.getDescription()));
         sb.append(Constant.DATA_DELIMITER);
         sb.append(armorDTO.getStatus());
         sb.append(Constant.DATA_DELIMITER);
@@ -106,31 +113,30 @@ public class ArmorServer extends UnicastRemoteObject implements ArmorInterface {
     synchronized private void writeData() {
         File file = null;
         FileWriter fw = null;
-        BufferedWriter bw = null;
+        BufferedWriter bfw = null;
+
         try {
             file = new File(FILE_NAME);
             fw = new FileWriter(file);
-            bw = new BufferedWriter(fw);
-            for (ArmorDTO armorDTO : listArmor) {
+            bfw = new BufferedWriter(fw);
+            for (ArmorDTO armorDTO : this.listArmor) {
                 String line = parseDTOToString(armorDTO);
-                bw.write(line);
-                bw.write("\n");
+                bfw.write(line);
+                bfw.write("\n");
             }
-
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, ArmorServer.class.getName() + "::" + e.getMessage());
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, ArmorServer.class.getName() + "::" + ex.getMessage());
         } finally {
             try {
-                if (bw != null) {
-                    bw.close();
+                if (bfw != null) {
+                    bfw.close();
                 }
                 if (fw != null) {
                     fw.close();
                 }
-            } catch (IOException e) {
-                LOGGER.log(Level.SEVERE, ArmorServer.class.getName() + "::" + e.getMessage());
+            } catch (IOException ex) {
+                LOGGER.log(Level.SEVERE, ArmorServer.class.getName() + "::" + ex.getMessage());
             }
-
         }
     }
 
