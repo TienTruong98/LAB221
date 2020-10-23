@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import tientt.daos.EmployeeDAO;
 import tientt.dtos.EmployeeDTO;
 import tientt.utlils.DBHelpers;
 
@@ -41,8 +40,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                     String phone = rs.getString("phone");
                     String email = rs.getString("email");
                     String address = rs.getString("address");
-                    Date dateOfbirth = rs.getDate("dateOfBirth");
-                    dto = new EmployeeDTO(id, fullName, phone, email, address, dateOfbirth);
+                    Long dateOfbirth = rs.getLong("dateOfBirth");
+                    dto = new EmployeeDTO(id, fullName, phone, email, address,
+                            new Date(dateOfbirth));
                 }
             }//end if con not null
         } finally {
@@ -74,7 +74,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 stm.setString(3, t.getPhone());
                 stm.setString(4, t.getEmail());
                 stm.setString(5, t.getAddress());
-                stm.setDate(6, new java.sql.Date(t.getDateOfbirth().getTime()));
+                stm.setLong(6, t.getDateOfbirth().getTime());
                 int result = stm.executeUpdate();
                 if (result != 0) {
                     return true;
@@ -106,7 +106,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 stm.setString(2, t.getPhone());
                 stm.setString(3, t.getEmail());
                 stm.setString(4, t.getAddress());
-                stm.setDate(5, new java.sql.Date(t.getDateOfbirth().getTime()));
+                stm.setLong(5, t.getDateOfbirth().getTime());
                 stm.setString(6, t.getEmpID());
                 int result = stm.executeUpdate();
                 if (result != 0) {
@@ -156,37 +156,38 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         List<EmployeeDTO> listDTOs = null;
-        try{
+        try {
             con = DBHelpers.getConnection();
-            if (con != null){
+            if (con != null) {
                 String sql = "SELECT empID, fullName, phone, email, address, dateOfBirth "
                         + "FROM tbl_Employee WHERE isDelete = 0";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 EmployeeDTO dto;
-                while (rs.next()){
+                while (rs.next()) {
                     String empID = rs.getString("empID");
                     String fullname = rs.getString("fullName");
                     String phone = rs.getString("phone");
                     String email = rs.getString("email");
                     String address = rs.getString("address");
-                    Date date = rs.getDate("dateOfBirth");
-                    dto = new EmployeeDTO(empID, fullname, phone, email, address, date);
-                    
-                    if (listDTOs == null){
-                        listDTOs = new ArrayList<EmployeeDTO> ();
+                    Long date = rs.getLong("dateOfBirth");
+                    dto = new EmployeeDTO(empID, fullname, phone, email, address,
+                            new Date(date));
+
+                    if (listDTOs == null) {
+                        listDTOs = new ArrayList<EmployeeDTO>();
                     }
                     listDTOs.add(dto);
                 }
             }//end if con not null
-        }finally{
-            if (rs != null){
+        } finally {
+            if (rs != null) {
                 rs.close();
             }
-            if (stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if (con != null){
+            if (con != null) {
                 con.close();
             }
         }

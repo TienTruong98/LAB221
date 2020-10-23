@@ -10,5 +10,5 @@ package tientt.utlils;
  * @author natton
  */
 public interface Constant {
-    public static final String DATE_FORMAT = "dd/MM/yyyy";
+    public static final String DATE_FORMAT = "MM/dd/yyyy";
 }

@@ -345,6 +345,9 @@ public class Main extends javax.swing.JFrame {
         txtPhone.setText("");
         txtID.setEnabled(true);
         isAddNew = true;
+        //remove selection
+        tblEmp.clearSelection();
+        
     }//GEN-LAST:event_btnResetMouseClicked
 
     private EmployeeViewObject getNewInformation() {

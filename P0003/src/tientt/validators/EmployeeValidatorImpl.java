@@ -77,23 +77,11 @@ public class EmployeeValidatorImpl implements EmployeeValidator {
 
     @Override
     public boolean isEmailValidate(String email) {
-        if (email.trim().length() > 30) {
-            return false;
-        }
-        //count @ occurace
-        int count = 0;
-        for (int i = 0; i <= email.length() - 1; i++) {
-            if (email.charAt(i) == '@') {
-                count++;
-                if (count == 2) {
-                    return false;
-                }
-            }
-        }
-        email = email.replaceAll("@", "");
-        Pattern pattern = Pattern.compile("[^0-9a-zA-Z.]");
+        Pattern pattern = Pattern.compile("[\\w]+@[\\w]+[.][\\w]+");
         boolean result = pattern.matcher(email).find();
-        return !result;
+        return result;
     }
+    
+    
 
 }
